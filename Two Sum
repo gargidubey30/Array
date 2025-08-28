@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+
+        int n=nums.size();
+        vector<int> ans;
+        map<int,int>mp;
+        
+
+        for(int i=0; i<n; i++){
+
+            int element = target-nums[i];
+           if(mp.find(element)!=mp.end()){
+            ans.push_back(mp[element]);
+            ans.push_back(i);
+            return ans;
+           }
+
+           mp[nums[i]]=i;         
+               
+        }
+        return ans;
+    }
+};
