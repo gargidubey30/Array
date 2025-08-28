@@ -1,0 +1,14 @@
+bool isPalindromeBrute(string s) {
+    string rev = s;
+    reverse(rev.begin(), rev.end());
+    return rev==s;
+}
+
+
+bool isPalindromeOptimal(string s) {
+    int l=0, r=s.size()-1;
+    while(l<r){
+        if(s[l++]!=s[r--]) return false;
+    }
+    return true;
+}
