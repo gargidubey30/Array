@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int longestSubarrayWithSumK(vector<int>& nums, int k) {
+        unordered_map<int,int> mp; // prefixSum -> first index
+        int presum = 0, maxLen = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+            presum += nums[i];
+
+            // Case 1: subarray from start
+            if (presum == k) {
+                maxLen = max(maxLen, i + 1);
+            }
+
+            // Case 2: subarray (j..i) with sum k
+            if (mp.find(presum - k) != mp.end()) {
+                int len = i - mp[presum - k];
+                maxLen = max(maxLen, len);
+            }
+
+            // store only first occurrence
+            if (mp.find(presum) == mp.end()) {
+                mp[presum] = i;
+            }
+        }
+        return maxLen;
+    }
+};
+
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+
+        int n = nums.size();
+        unordered_map<int,int> mp; // stores prefix sums and their frequency
+        mp[0] = 1;  // Important: prefix sum = 0 appears once before starting
+        int cnt = 0; // count of subarrays
+        int presum = 0; // running prefix sum
+
+        for(int i = 0; i < n; i++){
+            presum += nums[i]; // update prefix sum
+            int rem = presum - k; // what we need from past prefix sums
+
+            // if rem exists in map, then there are mp[rem] subarrays ending at i with sum = k
+            cnt += mp[rem];  
+
+            // store/update the current prefix sum in map
+            mp[presum] += 1;
+        }
+        return cnt;
+    }
+};
